@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaban Board</title>
+    <link rel="shortcut icon" href="/images/beach.png" type="image/x-icon">
+    <link rel="stylesheet" href="kaban.css">
+</head>
+
+<body>
+    <!-- //sidebarsection -->
+    <aside class="sidebar">
+        <div class="above">
+            <div class="text">
+                <h1>KanbanBoard</h2>
+            </div>
+            <div class="text2">
+                <h3><img src="/images/dashboard.png" alt="">Board</h3>
+                <h3> <img src="/images/checklist.png" alt="">Add Task</h3>
+            </div>
+        </div>
+        <div class="down">
+            <img src="/images/database.png" alt="">
+            <p>Saved To loacl storage <span class="green circle"></span></p>
+        </div>
+    </aside>
+
+    <!-- //navbar -->
+    <nav class="navbar">
+        <ul>
+            <div class="left-side">
+                <li>
+                    <h1>Kaban Board</h1>
+                </li>
+                <div class="tag">
+                    <li>plan</li>
+                    <span class="Spectator"></span>
+                    <li>Organize</li>
+                    <span class="Spectator"></span>
+                    <li>Settle</li>
+                </div>
+            </div>
+            <div class="right-side">
+                <button id="create">Create</button>
+                <button id="toggle-theme"><img src="/images/sun.png" alt=""></button>
+                <div id="profile">
+                    <img src="/images/user.png" alt="" id="profile-img">
+                </div>
+            </div>
+        </ul>
+    </nav>
+
+    <main>
+
+        <!-- //form-scetion -->
+        <div class="overlay1" style="display: none;">
+            <section class="profile">
+                <div class="button">
+                    <div></div>
+                    <button id="close-profile">X</button>
+                </div>
+                <h3>Enter the name to profile</h3>
+                <input type="text" id="name">
+                <h3>Enter the Image url for Porfile</h3>
+                <input type="text" id="image">
+                <button id="done">Set Profile</button>
+            </section>
+        </div>
+        <div class="overlay2" style="display: none;">
+            <section class="info">
+                  <div class="button">
+                    <div></div>
+                    <button id="close-task">X</button>
+                </div>
+                <h3>Welcome <span id="name-task">Name</span></h3>
+                <input type="text" id="task" placeholder="Enter task">
+                <input type="text" id="desicription" placeholder="Enter Description">
+                <button id="Submit">Submit</button>
+            </section>
+        </div>
+
+
+        <!-- //todoscteion -->
+        <section id="todo" ">
+            <h1>To Do<span id="count">1</span></h1>
+        </section>
+
+        <!-- //In-progresssection -->
+        <section id="In-progress">
+            <h1>In Progress<span id="count">1</span></h1>
+            
+        </section>
+
+        <!-- //done-section -->
+        <section id="Done">
+            <h1>Done<span id="count">1</span></h1>
+        </section>
+
+    </main>
+    <script src="kaban.js"></script>
+</body>
+
+</html>
