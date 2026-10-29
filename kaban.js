@@ -15,32 +15,35 @@ let todo = document.querySelector("#todo")
 let Progress = document.querySelector("#In-progress")
 let Done = document.querySelector("#Done")
 let cardtask = document.querySelectorAll(".card")
-let dragelement = null;
+let dragelement = null
 let Submit = document.querySelector("#Submit")
 let task = document.querySelector("#task")
 let discription = document.querySelector("#desicription")
 let maxarray = [todo, Progress, Done]
 let taskdata = {}
 
+// Profile open
 profilebutton.addEventListener("click", function () {
     overlayone.style.display = "flex"
 })
 
+// Profile close
 closeprofile.addEventListener("click", function () {
     overlayone.style.display = "none"
 })
 
-// profile code
+// Profile code
 
 let profiles = JSON.parse(localStorage.getItem("profiles")) || []
+let lastprofile = null
 
 downprofile.addEventListener("click", function () {
     let proname = profilename.value
     let proimage = profileimage.value
 
     if (proname.trim() === "" || proimage.trim() === "") {
-        alert("Please enter all values");
-        return;
+        alert("Please enter all values")
+        return
     }
 
     let profile = {
@@ -51,23 +54,20 @@ downprofile.addEventListener("click", function () {
     profiles.push(profile)
     localStorage.setItem("profiles", JSON.stringify(profiles))
 
-    lastprofile = profile;
-    displayimage.src = lastprofile.imageurl;
+    lastprofile = profile
+    displayimage.src = lastprofile.imageurl
 
     overlayone.style.display = "none"
 })
 
-let lastprofile = null
-
-let savedProfiles = JSON.parse(localStorage.getItem("profiles")) || [];
+let savedProfiles = JSON.parse(localStorage.getItem("profiles")) || []
 
 if (savedProfiles.length > 0) {
-    lastprofile = savedProfiles[savedProfiles.length - 1];
-
-    displayimage.src = lastprofile.imageurl;
+    lastprofile = savedProfiles[savedProfiles.length - 1]
+    displayimage.src = lastprofile.imageurl
 }
 
-// open Task Code
+// Create task function
 
 function Createtask(tasktitle, taskdiscription, column) {
     let article = document.createElement("article")
@@ -77,20 +77,47 @@ function Createtask(tasktitle, taskdiscription, column) {
 
     article.innerHTML = `<h1>${tasktitle}</h1>
                 <h3>${taskdiscription}</h3>
-                <button id="del">Delete</button>`
+                <button class="del">Delete</button>`
 
+    // Drag start
     article.addEventListener("dragstart", function () {
-        dragelement = article;
-    });
+        dragelement = article
+    })
 
+    // Drag end
     article.addEventListener("dragend", function () {
-        dragelement = null;
-    });
+        dragelement = null
+    })
+
+    // Delete task functionality
+    let deletebutton = article.querySelector(".del")
+
+    deletebutton.addEventListener("click", function () {
+        article.remove()
+
+        maxarray.forEach(column => {
+            let cards = column.querySelectorAll(".card")
+            let count = column.querySelector("#count")
+
+            taskdata[column.id] = Array.from(cards).map(t => {
+                return {
+                    task: t.querySelector("h1").innerText,
+                    discription: t.querySelector("h3").innerText
+                }
+            })
+
+            count.textContent = cards.length
+        })
+
+        localStorage.setItem("task", JSON.stringify(taskdata))
+    })
 
     column.appendChild(article)
 
     return article
 }
+
+// Load saved tasks from localStorage
 
 if (localStorage.getItem("task")) {
     let data = JSON.parse(localStorage.getItem("task"))
@@ -98,15 +125,20 @@ if (localStorage.getItem("task")) {
     for (const col in data) {
         const column = document.querySelector(`#${col}`)
 
+        if (!column) continue
+
         data[col].forEach(task => {
             Createtask(task.task, task.discription, column)
-        });
+        })
 
-        let card = column.querySelectorAll(".card")
+        let cards = column.querySelectorAll(".card")
         let count = column.querySelector("#count")
-        count.textContent = card.length
+
+        count.textContent = cards.length
     }
 }
+
+// Open task modal
 
 createtask.addEventListener("click", function () {
     if (!lastprofile) {
@@ -115,15 +147,36 @@ createtask.addEventListener("click", function () {
     }
 
     taskname.textContent = lastprofile.name
-
     overlaytwo.style.display = "flex"
 })
+
+// Close task modal
 
 closetask.addEventListener("click", function () {
     overlaytwo.style.display = "none"
 })
 
-// task drag and drop feature
+// Save tasks and update counts
+
+function SaveTasks() {
+    maxarray.forEach(column => {
+        let cards = column.querySelectorAll(".card")
+        let count = column.querySelector("#count")
+
+        taskdata[column.id] = Array.from(cards).map(t => {
+            return {
+                task: t.querySelector("h1").innerText,
+                discription: t.querySelector("h3").innerText
+            }
+        })
+
+        count.textContent = cards.length
+    })
+
+    localStorage.setItem("task", JSON.stringify(taskdata))
+}
+
+// Drag and drop feature
 
 function Createdrag(column, classname) {
     column.addEventListener("dragenter", function (e) {
@@ -144,56 +197,35 @@ function Createdrag(column, classname) {
         e.preventDefault()
 
         if (!dragelement) {
-            return;
+            return
         }
 
         this.appendChild(dragelement)
         this.classList.remove(classname)
-        dragelement = null;
+        dragelement = null
 
-        maxarray.forEach(column => {
-            let card = column.querySelectorAll(".card")
-            let count = column.querySelector("#count")
-
-            taskdata[column.id] = Array.from(card).map((t) => {
-                return {
-                    task: t.querySelector("h1").innerText,
-                    discription: t.querySelector("h3").innerText
-                }
-            })
-
-            localStorage.setItem("task", JSON.stringify(taskdata))
-            count.textContent = card.length
-        });
+        SaveTasks()
     })
 }
 
-Createdrag(todo, "hover-over-todo");
-Createdrag(Progress, "hover-over-progress");
-Createdrag(Done, "hover-over-done");
+Createdrag(todo, "hover-over-todo")
+Createdrag(Progress, "hover-over-progress")
+Createdrag(Done, "hover-over-done")
 
-// create task
+// Submit and create task
 
 Submit.addEventListener("click", function () {
     let taskt = task.value
     let discriptiont = discription.value
 
+    if (taskt.trim() === "" || discriptiont.trim() === "") {
+        alert("Please enter all task values")
+        return
+    }
+
     Createtask(taskt, discriptiont, todo)
 
-    maxarray.forEach(column => {
-        let card = column.querySelectorAll(".card")
-        let count = column.querySelector("#count")
-
-        taskdata[column.id] = Array.from(card).map((t) => {
-            return {
-                task: t.querySelector("h1").innerText,
-                discription: t.querySelector("h3").innerText
-            }
-        })
-
-        localStorage.setItem("task", JSON.stringify(taskdata))
-        count.textContent = card.length
-    });
+    SaveTasks()
 
     task.value = ""
     discription.value = ""
