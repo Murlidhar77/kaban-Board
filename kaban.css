@@ -39,6 +39,41 @@
 }
 
 
+.darktheme{
+
+    --span: #94A3B8;
+
+    --bg-sidebar: #111C30;
+    --bg-main: #0B1120;
+
+    --bg-todo: #263449;
+    --bg-progress: #172F50;
+    --bg-done: #123D35;
+
+    --span-bg-todo: #64748B;
+    --span-bg-inprogress: #3B82F6;
+    --span-bg-done: #22C55E;
+
+    --bg-card: #1E2D45;
+    --border-card: #334155;
+
+    --color-primary: #3B82F6;
+    --color-todo: #263449;
+    --color-progress: #3B82F6;
+    --color-done: #22C55E;
+
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-sidebar: #CBD5E1;
+
+    --priority-high: #4C252D;
+    --priority-medium: #49371F;
+    --priority-low: #164332;
+
+    --overlay-one: rgba(0, 0, 0, 0.75);
+}
+
+
 * {
     margin: 0%;
     padding: 0%;
@@ -92,6 +127,8 @@ body {
 
 nav {
     padding-top: 20px;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
 }
 
 nav ul {
@@ -165,7 +202,7 @@ nav ul {
 
 #toggle-theme {
     height: 35px;
-    background-color: var(--bg-card);
+    background-color: var(--bg-main);
     border: none;
     cursor: pointer;
 }
@@ -186,6 +223,8 @@ main {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
     padding: 20px;
+        background-color: var(--bg-main);
+    color: var(--text-primary);
 }
 
 
