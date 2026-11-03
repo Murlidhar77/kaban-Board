@@ -21,6 +21,7 @@ let task = document.querySelector("#task")
 let discription = document.querySelector("#desicription")
 let maxarray = [todo, Progress, Done]
 let taskdata = {}
+let themechanger  = document.querySelector('#toggle-theme')
 
 // Profile open
 profilebutton.addEventListener("click", function () {
@@ -232,3 +233,26 @@ Submit.addEventListener("click", function () {
 
     overlaytwo.style.display = "none"
 })
+// Toggletheme 
+
+let darkmode =  localStorage.getItem("darkmode")
+
+themechanger.addEventListener("click",function () {
+
+    darkmode = localStorage.getItem("darkmode")
+    darkmode !=="active" ? enabledarkmode() : disabledarkmode()
+})
+
+if (darkmode === "active") {
+    enabledarkmode()
+}
+
+function enabledarkmode() {
+    document.body.classList.add("darktheme")
+    localStorage.setItem("darkmode","active")
+}
+
+function disabledarkmode() {
+    document.body.classList.remove("darktheme")
+    localStorage.setItem("darkmode",null)
+}
