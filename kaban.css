@@ -211,7 +211,7 @@ nav ul {
     cursor: pointer;
 }
 
-#toggle-theme img {
+#toggle-theme svg {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -255,8 +255,8 @@ main {
     gap: 10px;
 }
 
-.above .text2 img {
-    height: 20px;
+.above .text2 svg {
+    height: 25px;
 }
 
 .above .text2 h3 {
