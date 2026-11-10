@@ -1,258 +1,284 @@
+let profilebutton = document.querySelector("#profile");
+let closeprofile = document.querySelector("#close-profile");
+let overlayone = document.querySelector(".overlay1");
+let downprofile = document.querySelector("#done");
+let profilename = document.querySelector("#name");
+let profileimage = document.querySelector("#image");
+let displayimage = document.querySelector("#profile-img");
+let createtask = document.querySelector("#create");
+let closetask = document.querySelector("#close-task");
+let overlaytwo = document.querySelector(".overlay2");
+let taskname = document.querySelector("#name-task");
 
-let profilebutton = document.querySelector("#profile")
-let closeprofile = document.querySelector("#close-profile")
-let overlayone = document.querySelector(".overlay1")
-let downprofile = document.querySelector("#done")
-let profilename = document.querySelector("#name")
-let profileimage = document.querySelector("#image")
-let displayimage = document.querySelector("#profile-img")
-let createtask = document.querySelector("#create")
-let closetask = document.querySelector("#close-task")
-let overlaytwo = document.querySelector(".overlay2")
-let taskname = document.querySelector("#name-task")
-
-let todo = document.querySelector("#todo")
-let Progress = document.querySelector("#In-progress")
-let Done = document.querySelector("#Done")
-let cardtask = document.querySelectorAll(".card")
-let dragelement = null
-let Submit = document.querySelector("#Submit")
-let task = document.querySelector("#task")
-let discription = document.querySelector("#desicription")
-let maxarray = [todo, Progress, Done]
-let taskdata = {}
-let themechanger  = document.querySelector('#toggle-theme')
+let todo = document.querySelector("#todo");
+let Progress = document.querySelector("#In-progress");
+let Done = document.querySelector("#Done");
+let cardtask = document.querySelectorAll(".card");
+let dragelement = null;
+let Submit = document.querySelector("#Submit");
+let task = document.querySelector("#task");
+let discription = document.querySelector("#desicription");
+let maxarray = [todo, Progress, Done];
+let taskdata = {};
+let themechanger = document.querySelector("#toggle-theme");
 
 // Profile open
 profilebutton.addEventListener("click", function () {
-    overlayone.style.display = "flex"
-})
+  overlayone.style.display = "flex";
+});
 
 // Profile close
 closeprofile.addEventListener("click", function () {
-    overlayone.style.display = "none"
-})
+  overlayone.style.display = "none";
+});
 
 // Profile code
 
-let profiles = JSON.parse(localStorage.getItem("profiles")) || []
-let lastprofile = null
+let profiles = JSON.parse(localStorage.getItem("profiles")) || [];
+let lastprofile = null;
 
 downprofile.addEventListener("click", function () {
-    let proname = profilename.value
-    let proimage = profileimage.value
+  let proname = profilename.value;
+  let proimage = profileimage.value;
 
-    if (proname.trim() === "" || proimage.trim() === "") {
-        alert("Please enter all values")
-        return
-    }
+  if (proname.trim() === "" || proimage.trim() === "") {
+    alert("Please enter all values");
+    return;
+  }
 
-    let profile = {
-        name: proname,
-        imageurl: proimage
-    }
+  let profile = {
+    name: proname,
+    imageurl: proimage,
+  };
 
-    profiles.push(profile)
-    localStorage.setItem("profiles", JSON.stringify(profiles))
+  profiles.push(profile);
+  localStorage.setItem("profiles", JSON.stringify(profiles));
 
-    lastprofile = profile
-    displayimage.src = lastprofile.imageurl
+  lastprofile = profile;
+  displayimage.src = lastprofile.imageurl;
 
-    overlayone.style.display = "none"
-})
+  overlayone.style.display = "none";
+});
 
-let savedProfiles = JSON.parse(localStorage.getItem("profiles")) || []
+let savedProfiles = JSON.parse(localStorage.getItem("profiles")) || [];
 
 if (savedProfiles.length > 0) {
-    lastprofile = savedProfiles[savedProfiles.length - 1]
-    displayimage.src = lastprofile.imageurl
+  lastprofile = savedProfiles[savedProfiles.length - 1];
+  displayimage.src = lastprofile.imageurl;
 }
 
 // Create task function
 
 function Createtask(tasktitle, taskdiscription, column) {
-    let article = document.createElement("article")
+  let article = document.createElement("article");
 
-    article.classList.add("card")
-    article.setAttribute("draggable", "true")
+  article.classList.add("card");
+  article.setAttribute("draggable", "true");
 
-    article.innerHTML = `<h1>${tasktitle}</h1>
+  article.innerHTML = `<h1>${tasktitle}</h1>
                 <h3>${taskdiscription}</h3>
-                <button class="del">Delete</button>`
+                <button class="del">Delete</button>`;
 
-    // Drag start
-    article.addEventListener("dragstart", function () {
-        dragelement = article
-    })
+  // Drag start
+  article.addEventListener("dragstart", function () {
+    dragelement = article;
+  });
 
-    // Drag end
-    article.addEventListener("dragend", function () {
-        dragelement = null
-    })
+  // Drag end
+  article.addEventListener("dragend", function () {
+    dragelement = null;
+  });
 
-    // Delete task functionality
-    let deletebutton = article.querySelector(".del")
+  // Delete task functionality
+  let deletebutton = article.querySelector(".del");
 
-    deletebutton.addEventListener("click", function () {
-        article.remove()
+  deletebutton.addEventListener("click", function () {
+    article.remove();
 
-        maxarray.forEach(column => {
-            let cards = column.querySelectorAll(".card")
-            let count = column.querySelector("#count")
+    maxarray.forEach((column) => {
+      let cards = column.querySelectorAll(".card");
+      let count = column.querySelector("#count");
 
-            taskdata[column.id] = Array.from(cards).map(t => {
-                return {
-                    task: t.querySelector("h1").innerText,
-                    discription: t.querySelector("h3").innerText
-                }
-            })
+      taskdata[column.id] = Array.from(cards).map((t) => {
+        return {
+          task: t.querySelector("h1").innerText,
+          discription: t.querySelector("h3").innerText,
+        };
+      });
 
-            count.textContent = cards.length
-        })
+      count.textContent = cards.length;
+    });
 
-        localStorage.setItem("task", JSON.stringify(taskdata))
-    })
+    localStorage.setItem("task", JSON.stringify(taskdata));
+  });
 
-    column.appendChild(article)
+  column.appendChild(article);
 
-    return article
+  return article;
 }
 
 // Load saved tasks from localStorage
 
 if (localStorage.getItem("task")) {
-    let data = JSON.parse(localStorage.getItem("task"))
+  let data = JSON.parse(localStorage.getItem("task"));
 
-    for (const col in data) {
-        const column = document.querySelector(`#${col}`)
+  for (const col in data) {
+    const column = document.querySelector(`#${col}`);
 
-        if (!column) continue
+    if (!column) continue;
 
-        data[col].forEach(task => {
-            Createtask(task.task, task.discription, column)
-        })
+    data[col].forEach((task) => {
+      Createtask(task.task, task.discription, column);
+    });
 
-        let cards = column.querySelectorAll(".card")
-        let count = column.querySelector("#count")
+    let cards = column.querySelectorAll(".card");
+    let count = column.querySelector("#count");
 
-        count.textContent = cards.length
-    }
+    count.textContent = cards.length;
+  }
 }
 
 // Open task modal
 
 createtask.addEventListener("click", function () {
-    if (!lastprofile) {
-        alert("Please make profile first")
-        return
-    }
+  if (!lastprofile) {
+    alert("Please make profile first");
+    return;
+  }
 
-    taskname.textContent = lastprofile.name
-    overlaytwo.style.display = "flex"
-})
+  taskname.textContent = lastprofile.name;
+  overlaytwo.style.display = "flex";
+});
 
 // Close task modal
 
 closetask.addEventListener("click", function () {
-    overlaytwo.style.display = "none"
-})
+  overlaytwo.style.display = "none";
+});
 
 // Save tasks and update counts
 
 function SaveTasks() {
-    maxarray.forEach(column => {
-        let cards = column.querySelectorAll(".card")
-        let count = column.querySelector("#count")
+  maxarray.forEach((column) => {
+    let cards = column.querySelectorAll(".card");
+    let count = column.querySelector("#count");
 
-        taskdata[column.id] = Array.from(cards).map(t => {
-            return {
-                task: t.querySelector("h1").innerText,
-                discription: t.querySelector("h3").innerText
-            }
-        })
+    taskdata[column.id] = Array.from(cards).map((t) => {
+      return {
+        task: t.querySelector("h1").innerText,
+        discription: t.querySelector("h3").innerText,
+      };
+    });
 
-        count.textContent = cards.length
-    })
+    count.textContent = cards.length;
+  });
 
-    localStorage.setItem("task", JSON.stringify(taskdata))
+  localStorage.setItem("task", JSON.stringify(taskdata));
 }
 
 // Drag and drop feature
 
 function Createdrag(column, classname) {
-    column.addEventListener("dragenter", function (e) {
-        e.preventDefault()
-        this.classList.add(classname)
-    })
+  column.addEventListener("dragenter", function (e) {
+    e.preventDefault();
+    this.classList.add(classname);
+  });
 
-    column.addEventListener("dragleave", function (e) {
-        e.preventDefault()
-        this.classList.remove(classname)
-    })
+  column.addEventListener("dragleave", function (e) {
+    e.preventDefault();
+    this.classList.remove(classname);
+  });
 
-    column.addEventListener("dragover", function (e) {
-        e.preventDefault()
-    })
+  column.addEventListener("dragover", function (e) {
+    e.preventDefault();
+  });
 
-    column.addEventListener("drop", function (e) {
-        e.preventDefault()
+  column.addEventListener("drop", function (e) {
+    e.preventDefault();
 
-        if (!dragelement) {
-            return
-        }
+    if (!dragelement) {
+      return;
+    }
 
-        this.appendChild(dragelement)
-        this.classList.remove(classname)
-        dragelement = null
+    this.appendChild(dragelement);
+    this.classList.remove(classname);
+    dragelement = null;
 
-        SaveTasks()
-    })
+    SaveTasks();
+  });
 }
 
-Createdrag(todo, "hover-over-todo")
-Createdrag(Progress, "hover-over-progress")
-Createdrag(Done, "hover-over-done")
+Createdrag(todo, "hover-over-todo");
+Createdrag(Progress, "hover-over-progress");
+Createdrag(Done, "hover-over-done");
 
 // Submit and create task
 
-Submit.addEventListener("click", function () {
-    let taskt = task.value
-    let discriptiont = discription.value
+function HandleSubmit() {
+  let taskt = task.value;
+  let discriptiont = discription.value;
 
-    if (taskt.trim() === "" || discriptiont.trim() === "") {
-        alert("Please enter all task values")
-        return
-    }
+  if (taskt.trim() === "" || discriptiont.trim() === "") {
+    alert("Please enter all task values");
+    return;
+  }
 
-    Createtask(taskt, discriptiont, todo)
+  Createtask(taskt, discriptiont, todo);
 
-    SaveTasks()
+  SaveTasks();
 
-    task.value = ""
-    discription.value = ""
+  task.value = "";
+  discription.value = "";
 
-    overlaytwo.style.display = "none"
-})
-// Toggletheme 
+  overlaytwo.style.display = "none";
+}
 
-let darkmode =  localStorage.getItem("darkmode")
+Submit.addEventListener("click", HandleSubmit);
+// Toggletheme
 
-themechanger.addEventListener("click",function () {
+let darkmode = localStorage.getItem("darkmode");
 
-    darkmode = localStorage.getItem("darkmode")
-    darkmode !=="active" ? enabledarkmode() : disabledarkmode()
-})
+themechanger.addEventListener("click", function () {
+  darkmode = localStorage.getItem("darkmode");
+  darkmode !== "active" ? enabledarkmode() : disabledarkmode();
+});
 
 if (darkmode === "active") {
-    enabledarkmode()
+  enabledarkmode();
 }
 
 function enabledarkmode() {
-    document.body.classList.add("darktheme")
-    localStorage.setItem("darkmode","active")
+  document.body.classList.add("darktheme");
+  localStorage.setItem("darkmode", "active");
 }
 
 function disabledarkmode() {
-    document.body.classList.remove("darktheme")
-    localStorage.setItem("darkmode",null)
+  document.body.classList.remove("darktheme");
+  localStorage.setItem("darkmode", null);
 }
+
+//sidebar add-task doing
+
+function OpenTaskModal() {
+  if (!lastprofile) {
+    alert("Please make profile first");
+    return;
+  }
+
+  taskname.textContent = lastprofile.name;
+  overlaytwo.style.display = "flex";
+}
+
+let board = document.querySelector("#side-borad");
+let addtask = document.querySelector("#side-add-task");
+
+addtask.addEventListener("click", function () {
+  addtask.classList.add("active");
+  board.classList.remove("active");
+  OpenTaskModal();
+});
+
+board.addEventListener("click", function () {
+  addtask.classList.remove("active");
+  board.classList.add("active");
+});

@@ -268,8 +268,18 @@ main {
     gap: 20px;
     padding: 10px;
 }
+#side-add-task,
+#side-borad {
+  transition: all 0.3s ease-in-out;
+}
 
-.text2 h3:first-child {
+#side-add-task.active-bg,
+#side-borad.active-bg{
+  background-color: var(--color-primary);
+  color: white;
+  transform: translateX(5px);
+}
+.active-bg {
     background-color: var(--color-primary);
 }
 
