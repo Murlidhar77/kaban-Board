@@ -608,3 +608,287 @@ section h1 {
     cursor: pointer;
 
 }
+
+
+@media (max-width: 1200px) {
+    body {
+        grid-template-columns: 210px minmax(0, 1fr);
+    }
+
+    main {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        padding: 16px;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .right-side {
+        gap: 25px;
+    }
+
+    section {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    body {
+        grid-template-columns: 190px minmax(0, 1fr);
+        grid-template-rows: 85px 1fr;
+    }
+
+    .navbar {
+        padding: 0 18px;
+    }
+
+    main {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 14px;
+        gap: 12px;
+    }
+
+    #Done {
+        grid-column: 1 / -1;
+    }
+
+    .sidebar {
+        padding: 18px 12px;
+    }
+
+    .above {
+        gap: 20px;
+    }
+
+    .above .text2 h3 {
+        gap: 12px;
+        font-size: 13px;
+    }
+
+    .right-side {
+        gap: 15px;
+    }
+
+    #create {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .tag {
+        font-size: 11px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 650px) {
+    body {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas:
+            "sidebar"
+            "navbar"
+            "main";
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 0;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .above {
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+    }
+
+    .above .text2 {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .above .text2 h3 {
+        height: 40px;
+        padding: 8px;
+        gap: 6px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .above .text2 svg {
+        height: 19px;
+    }
+
+    .sidebar .down {
+        width: auto;
+        flex-shrink: 0;
+        font-size: 9px;
+    }
+
+    .sidebar .down img {
+        height: 25px;
+    }
+
+    .navbar {
+        min-height: 75px;
+        padding: 12px 16px;
+    }
+
+    nav {
+        padding-top: 0;
+    }
+
+    nav ul {
+        gap: 12px;
+    }
+
+    .right-side {
+        gap: 12px;
+    }
+
+    .left-side {
+        gap: 5px;
+        align-items: flex-start;
+    }
+
+    .tag {
+        font-size: 10px;
+    }
+
+    #create {
+        padding: 9px 12px;
+        font-size: 11px;
+    }
+
+    #profile {
+        width: 35px;
+        height: 35px;
+        flex-shrink: 0;
+    }
+
+    #toggle-theme {
+        width: 30px;
+        height: 30px;
+        flex-shrink: 0;
+    }
+
+    main {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 14px;
+        gap: 16px;
+    }
+
+    #Done {
+        grid-column: auto;
+    }
+
+    section {
+        width: 100%;
+        min-width: 0;
+        padding: 14px;
+    }
+
+    .card {
+        width: 100%;
+        padding: 16px;
+        margin-top: 14px;
+    }
+
+    .card h1 {
+        font-size: 18px;
+        overflow-wrap: anywhere;
+    }
+
+    .card h3 {
+        font-size: 13px;
+        overflow-wrap: anywhere;
+    }
+
+    .overlay1,
+    .overlay2 {
+        padding: 16px;
+        overflow-y: auto;
+    }
+
+    .profile,
+    .info {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: min(100%, 380px);
+        max-height: calc(100dvh - 32px);
+        overflow-y: auto;
+        margin: 0;
+        padding: 22px;
+    }
+}
+
+@media (max-width: 400px) {
+    .sidebar {
+        padding: 10px;
+    }
+
+    .above {
+        gap: 6px;
+    }
+
+    .above .text2 {
+        gap: 3px;
+    }
+
+    .above .text2 h3 {
+        padding: 6px;
+        gap: 4px;
+        font-size: 9px;
+    }
+
+    .above .text2 svg {
+        height: 16px;
+    }
+
+    .sidebar .down {
+        gap: 5px;
+        font-size: 8px;
+    }
+
+    .navbar {
+        padding: 10px;
+    }
+
+    .right-side {
+        gap: 8px;
+    }
+
+    #create {
+        padding: 8px 9px;
+        font-size: 10px;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    section {
+        padding: 12px;
+    }
+
+    .card {
+        padding: 13px;
+    }
+
+    .profile,
+    .info {
+        padding: 18px;
+    }
+}
