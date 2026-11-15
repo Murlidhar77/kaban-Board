@@ -37,7 +37,7 @@ closeprofile.addEventListener("click", function () {
 let profiles = JSON.parse(localStorage.getItem("profiles")) || [];
 let lastprofile = null;
 
-downprofile.addEventListener("click", function () {
+function CreateProfile() {
   let proname = profilename.value;
   let proimage = profileimage.value;
 
@@ -58,7 +58,9 @@ downprofile.addEventListener("click", function () {
   displayimage.src = lastprofile.imageurl;
 
   overlayone.style.display = "none";
-});
+}
+
+downprofile.addEventListener("click", CreateProfile);
 
 let savedProfiles = JSON.parse(localStorage.getItem("profiles")) || [];
 
@@ -271,14 +273,29 @@ function OpenTaskModal() {
 
 let board = document.querySelector("#side-borad");
 let addtask = document.querySelector("#side-add-task");
+let SideProfile = document.querySelector("#side-profile");
+
+
+function Removeclass() {
+  addtask.classList.remove("active");
+  SideProfile.classList.remove("active");
+  board.classList.remove("active");
+}
 
 addtask.addEventListener("click", function () {
+  Removeclass();
   addtask.classList.add("active");
-  board.classList.remove("active");
   OpenTaskModal();
 });
 
 board.addEventListener("click", function () {
-  addtask.classList.remove("active");
+  Removeclass();
   board.classList.add("active");
+});
+
+SideProfile.addEventListener("click", function () {
+  Removeclass();
+  SideProfile.classList.add("active");
+  overlayone.style.display = "flex"
+  
 });
